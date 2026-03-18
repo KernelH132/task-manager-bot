@@ -13,6 +13,8 @@ import (
 
 func Handler(w http.ResponseWriter, r *http.Request) {
 
+	ctx := r.Context()
+
 	body := &models.WebhookReqBody{}
 	if err := json.NewDecoder(r.Body).Decode(body); err != nil {
 		fmt.Println("Could not decode request body", err)
@@ -22,17 +24,17 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 	userInput := strings.ToLower(strings.TrimSpace(body.Message.Text))
 	chatID := body.Message.Chat.ID
 
-	current_state := service.GetUserState(repository.DB, chatID)
+	current_state := service.GetUserState(ctx, repository.DB, chatID)
 
 	switch current_state {
 	case "awaiting_username":
-		service.HandleUsernameCreation(chatID, userInput)
+		service.HandleUsernameCreation(ctx, chatID, userInput)
 	case "idle":
-		service.HandleMainMenu(chatID, userInput)
+		service.HandleMainMenu(ctx, chatID, userInput)
 	default:
 		// Fallback to idle if something goes wrong
-		service.SetUserState(repository.DB, chatID, "idle")
-		service.HandleMainMenu(chatID, userInput)
+		service.SetUserState(ctx, repository.DB, chatID, "idle")
+		service.HandleMainMenu(ctx, chatID, userInput)
 	}
 
 	w.WriteHeader(http.StatusOK)

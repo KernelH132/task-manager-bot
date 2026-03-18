@@ -5,6 +5,7 @@ import (
 	"log"
 	"os"
 	"strings"
+	"time"
 
 	"github.com/joho/godotenv"
 	_ "github.com/lib/pq" //driver to talk to postgres
@@ -19,6 +20,7 @@ func Connect() {
 	}
 	connStr := os.Getenv("DB_Conn")
 	connStr = strings.Trim(connStr, "\"")
+
 	if connStr == "" {
 		log.Fatal("DB_Conn environment variable is not set")
 	}
@@ -28,9 +30,14 @@ func Connect() {
 		log.Fatal("error opening database:", err)
 	}
 
+	db.SetMaxOpenConns(25)
+	db.SetMaxIdleConns(25)
+	db.SetConnMaxLifetime(5 * time.Minute)
+
 	if err := db.Ping(); err != nil {
 		log.Fatal("error connecting to database:", err)
 	}
 
 	DB = db
+	log.Println("Database connection established")
 }

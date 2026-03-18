@@ -1,34 +1,32 @@
 package service
 
 import (
+	"context"
 	"database/sql"
 	"fmt"
 )
 
 // SaveTaskToDB ensures the user exists and then saves their task
-func SaveUsernameToDB(db *sql.DB, chatID int64, username string) error {
-	// 1. First, we "Upsert" the user to get their internal BIGSERIAL ID.
-	// This ensures that even if they haven't "registered," they exist now.
-	var internalUserID int64
-	userQuery := `
-        INSERT INTO users (chat_id) 
-        VALUES ($1) 
-        ON CONFLICT (chat_id) DO UPDATE SET updated_at = NOW()
-        RETURNING id;
+func SaveUsernameToDB(ctx context.Context, db *sql.DB, chatID int64, username string) error {
+	query := `
+        UPDATE users 
+        SET username = $1, 
+            updated_at = NOW() 
+        WHERE chat_id = $2;
     `
-	err := db.QueryRow(userQuery, chatID).Scan(&internalUserID)
+
+	result, err := db.ExecContext(ctx, query, username, chatID)
 	if err != nil {
-		return fmt.Errorf("could not sync user: %v", err)
+		return fmt.Errorf("could not update username: %w", err)
 	}
 
-	// 2. Now we insert the task using that internal ID.
-	taskQuery := `
-        INSERT INTO tasks (user_id, username) 
-        VALUES ($1, $2);
-    `
-	_, err = db.Exec(taskQuery, internalUserID, username)
+	// Checking RowsAffected is good practice to ensure the user actually exists
+	rows, err := result.RowsAffected()
 	if err != nil {
-		return fmt.Errorf("could not save task: %v", err)
+		return err
+	}
+	if rows == 0 {
+		return fmt.Errorf("no user found with chat_id %d", chatID)
 	}
 
 	return nil
