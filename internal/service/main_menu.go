@@ -11,12 +11,12 @@ import (
 func HandleMainMenu(ctx context.Context, chatID int64, input string) {
 	switch {
 	case input == "/start":
-		SendChatAction(chatID, "typing...")
+		SendChatAction(chatID, "typing")
 		welcomeMessage := `
 🌸 ━━━━━━━━━━━━━━ 🌸
              ᴡᴇʟᴄᴏᴍᴇ ᴛᴏ 𝚁𝚢𝚞𝚔 𝙱𝚘𝚝 ⚚
  
-  ╰┈➤   𝙵𝚞𝚗 𝚌𝚘𝚖𝚖𝚊𝚗𝚍𝚜 ‎ꫂ᭪݁
+  ╰┈➤   𝙵𝚞𝚗 𝚌𝚘𝚖𝚖𝚊𝚗𝚍𝚜 ‎ꫂ᭪݁-
   ╰┈➤   𝙲𝚘𝚘𝚕 𝚏𝚎𝚊𝚝𝚞𝚛𝚎𝚜 .☘︎ ݁˖
   ╰┈➤   𝙴𝚗𝚍𝚕𝚎𝚜𝚜 𝚟𝚒𝚋𝚎𝚜 𖦹
 
@@ -67,10 +67,7 @@ func HandleMainMenu(ctx context.Context, chatID int64, input string) {
 ᴄʜᴇᴄᴋ ᴏᴜᴛ ᴛʜᴇ ᴍᴀɪɴ ɢʀᴏᴜᴘ ᴛᴏ ᴄᴏɴɴᴇᴄᴛ ᴡɪᴛʜ ᴏᴛʜᴇʀs → https://t.me/ryuk_bott
 `)
 	case input == "/ping":
-		SendMessage(chatID, "pong")
-
-	case input == "/group":
-		SendMessage(chatID, "Join our main group to connect with other users, get updates and support:\n\nhttps://t.me/ryuk_bott")
+		SendMessage(chatID, "ᴘᴏɴɢ")
 
 	case input == "/profile":
 		username, err := GetProfile(ctx, chatID)
@@ -79,6 +76,12 @@ func HandleMainMenu(ctx context.Context, chatID int64, input string) {
 			return
 		}
 		SendMessage(chatID, fmt.Sprintf("Your username is: %s", username))
+
+	case input == "/quote":
+		SendRandomQuote(chatID)
+
+	default:
+		SendMessage(chatID, "Sorry, I didn't understand that command. Use /help to see available commands.")
 	}
 
 }
@@ -96,7 +99,6 @@ func HandleUsernameCreation(ctx context.Context, chatID int64, username string) 
 		return
 	}
 
-	// Step 2: RESET to idle so they can use other commands again
 	err = SetUserState(ctx, repository.DB, chatID, "idle")
 	if err != nil {
 		fmt.Printf("Warning: failed to reset user state for %d: %v\n", chatID, err)
@@ -105,7 +107,6 @@ func HandleUsernameCreation(ctx context.Context, chatID int64, username string) 
 
 	createdMessage := fmt.Sprintf("Hi %s, your username has been created!🚀", username)
 
-	// Step 3: Success message
 	SendMessage(chatID, createdMessage)
 
 }
