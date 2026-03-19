@@ -23,12 +23,12 @@ Get started by using:
 🟢 Ready
 
 `
-		imagePath := "./assets/welcome-img.jpeg"
+		imagePath := "./assets/welcome.jpeg"
 
 		err := SendPhotoWithCaption(chatID, imagePath, welcomeMessage)
 		if err != nil {
 			fmt.Println("Error sending welcome message:", err)
-			SendMessage(chatID, welcomeMessage)
+
 		}
 	case strings.ToLower(input) == "/register":
 		err := SetUserState(ctx, repository.DB, chatID, "awaiting_username")
@@ -72,13 +72,13 @@ Get started by using:
 }
 
 func HandleUsernameCreation(ctx context.Context, chatID int64, username string) {
-	// Step 1: Save the username to the database
-	err := SaveUsernameToDB(ctx, repository.DB, chatID, username)
+
 	if len(username) >= 32 {
 		SendMessage(chatID, "That username is too long! Keep it under 32 characters.")
 		return
 
 	}
+	err := SaveUsernameToDB(ctx, repository.DB, chatID, username)
 	if err != nil {
 		SendMessage(chatID, "System error. Try again later.")
 		return
