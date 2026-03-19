@@ -71,3 +71,9 @@ func SendPhotoWithCaption(chatID int64, photoURL string, caption string) error {
 
 	return nil
 }
+
+func SendChatAction(chatID int64, action string) {
+	token := os.Getenv("BOT_TOKEN")
+	url := fmt.Sprintf("https://api.telegram.org/bot%s/sendChatAction?chat_id=%d&action=%s", token, chatID, action)
+	_, _ = http.Get(url)
+}

@@ -11,6 +11,7 @@ import (
 func HandleMainMenu(ctx context.Context, chatID int64, input string) {
 	switch {
 	case input == "/start":
+		SendChatAction(chatID, "typing...")
 		welcomeMessage := `👋 Welcome to 𝚁𝚢𝚞𝚔 𝙱𝚘𝚝!
 
 Get started by using:
