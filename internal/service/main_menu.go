@@ -11,8 +11,7 @@ import (
 func HandleMainMenu(ctx context.Context, chatID int64, input string) {
 	switch {
 	case input == "/start":
-		SendMessage(chatID, `
-👋 Welcome to 𝚁𝚢𝚞𝚔 𝙱𝚘𝚝!
+		welcomeMessage := `👋 Welcome to 𝚁𝚢𝚞𝚔 𝙱𝚘𝚝!
 
 Get started by using:
 /help — view available commands
@@ -22,8 +21,15 @@ View main group to connect with other users, get updates and support:
 • Main group: https://t.me/ryuk_bott
 
 🟢 Ready
-`)
 
+`
+		imagePath := "assets/welcome-img.jpeg"
+
+		err := SendPhotoWithCaption(chatID, imagePath, welcomeMessage)
+		if err != nil {
+			fmt.Println("Error sending welcome message:", err)
+			SendMessage(chatID, welcomeMessage)
+		}
 	case strings.ToLower(input) == "/register":
 		err := SetUserState(ctx, repository.DB, chatID, "awaiting_username")
 		if err != nil {
