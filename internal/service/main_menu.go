@@ -12,17 +12,24 @@ func HandleMainMenu(ctx context.Context, chatID int64, input string) {
 	switch {
 	case input == "/start":
 		SendChatAction(chatID, "typing...")
-		welcomeMessage := `👋 Welcome to 𝚁𝚢𝚞𝚔 𝙱𝚘𝚝!
+		welcomeMessage := `
+🌸 ━━━━━━━━━━━━━━ 🌸
+             ᴡᴇʟᴄᴏᴍᴇ ᴛᴏ 𝚁𝚢𝚞𝚔 𝙱𝚘𝚝 ⚚
+ 
+  ╰┈➤   𝙵𝚞𝚗 𝚌𝚘𝚖𝚖𝚊𝚗𝚍𝚜 ‎ꫂ᭪݁
+  ╰┈➤   𝙲𝚘𝚘𝚕 𝚏𝚎𝚊𝚝𝚞𝚛𝚎𝚜 .☘︎ ݁˖
+  ╰┈➤   𝙴𝚗𝚍𝚕𝚎𝚜𝚜 𝚟𝚒𝚋𝚎𝚜 𖦹
 
-Get started by using:
-/help — view available commands
+𝚁𝚢𝚞𝚔 𝙱𝚘𝚝 𝚒𝚜 𝚑𝚎𝚛𝚎 𝚝𝚘 𝚔𝚎𝚎𝚙 𝚝𝚑𝚒𝚗𝚐𝚜 𝚒𝚗𝚝𝚎𝚛𝚎𝚜𝚝𝚒𝚗𝚐.
 
-*View* main group to connect with other users, get updates and support:
+🌸 ━━━━━━━━━━━━━━ 🌸
 
-• Main group: https://t.me/ryuk_bott
+      /help — ᴠɪᴇᴡ ᴀᴠᴀɪʟᴀʙʟᴇ ᴄᴏᴍᴍᴀɴᴅs
 
-🟢 Ready
+  🦋    ᴍᴀɪɴ ɢʀᴏᴜᴘ →  t.me/ryuk_bott  🦋
 
+🌸 ━━━━━━━━━━━━━━ 🌸
+                ʙᴏᴛ sᴛᴀᴛᴜs: ᴏɴʟɪɴᴇ ᯓ★
 `
 		err := SendPhotoWithCaption(chatID, "https://pin.it/6dAfyFQff", welcomeMessage)
 		if err != nil {
