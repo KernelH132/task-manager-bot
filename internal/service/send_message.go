@@ -12,7 +12,7 @@ import (
 )
 
 func SendMessage(chatID int64, message string) error {
-	token := os.Getenv("TELEGRAM_BOT_TOKEN")
+	token := os.Getenv("BOT_TOKEN")
 	if token == "" {
 		return errors.New("telegram bot token not set in environment")
 	}

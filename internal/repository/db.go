@@ -18,11 +18,11 @@ func Connect() {
 	if err != nil {
 		log.Println("No .env file found")
 	}
-	connStr := os.Getenv("DB_Conn")
+	connStr := os.Getenv("DATABASE_URL")
 	connStr = strings.Trim(connStr, "\"")
 
 	if connStr == "" {
-		log.Fatal("DB_Conn environment variable is not set")
+		log.Fatal("DATABASE_URL environment variable is not set")
 	}
 
 	db, err := sql.Open("postgres", connStr)
