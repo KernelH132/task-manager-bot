@@ -23,13 +23,12 @@ Get started by using:
 🟢 Ready
 
 `
-		imagePath := "./assets/welcome.jpeg"
-
-		err := SendPhotoWithCaption(chatID, imagePath, welcomeMessage)
+		err := SendPhotoWithCaption(chatID, "https://pin.it/6dAfyFQff", welcomeMessage)
 		if err != nil {
 			fmt.Println("Error sending welcome message:", err)
-			SendMessage(chatID, welcomeMessage)
+			SendMessage(chatID, "Welcome to Ryuk Bot! Use /help to see available commands.")
 		}
+
 	case strings.ToLower(input) == "/register":
 		err := SetUserState(ctx, repository.DB, chatID, "awaiting_username")
 		if err != nil {
