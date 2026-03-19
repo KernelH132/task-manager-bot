@@ -28,7 +28,7 @@ Get started by using:
 		err := SendPhotoWithCaption(chatID, imagePath, welcomeMessage)
 		if err != nil {
 			fmt.Println("Error sending welcome message:", err)
-
+			SendMessage(chatID, welcomeMessage)
 		}
 	case strings.ToLower(input) == "/register":
 		err := SetUserState(ctx, repository.DB, chatID, "awaiting_username")
