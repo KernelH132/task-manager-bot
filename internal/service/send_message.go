@@ -43,13 +43,12 @@ func SendMessage(chatID int64, message string) error {
 
 	return nil
 }
-
 func SendPhotoWithCaption(chatID int64, imagePath string, caption string) error {
 	token := os.Getenv("BOT_TOKEN")
 	if token == "" {
 		return errors.New("telegram bot token not set in environment")
 	}
-	url := "https://api.telegram.org/bot" + token + "/sendPhoto"
+	url := fmt.Sprintf("https://api.telegram.org/bot%s/sendPhoto", token)
 
 	file, err := os.Open(imagePath)
 	if err != nil {
@@ -60,22 +59,30 @@ func SendPhotoWithCaption(chatID int64, imagePath string, caption string) error 
 	body := &bytes.Buffer{}
 	writer := multipart.NewWriter(body)
 
-	_ = writer.WriteField("chat_id", strconv.FormatInt(chatID, 10))
-	_ = writer.WriteField("caption", caption)
-	_ = writer.WriteField("parse_mode", "Markdown")
+	// Add form fields
+	writer.WriteField("chat_id", strconv.FormatInt(chatID, 10))
+	writer.WriteField("caption", caption)
+	writer.WriteField("parse_mode", "Markdown")
 
+	// Create the file part
 	part, err := writer.CreateFormFile("photo", imagePath)
 	if err != nil {
 		return err
 	}
 
-	io.Copy(part, file)
-	writer.Close()
+	if _, err = io.Copy(part, file); err != nil {
+		return err
+	}
+
+	if err := writer.Close(); err != nil {
+		return err
+	}
 
 	req, err := http.NewRequest("POST", url, body)
 	if err != nil {
 		return err
 	}
+
 	req.Header.Set("Content-Type", writer.FormDataContentType())
 
 	client := &http.Client{}
@@ -86,7 +93,7 @@ func SendPhotoWithCaption(chatID int64, imagePath string, caption string) error 
 	defer res.Body.Close()
 
 	if res.StatusCode != http.StatusOK {
-		return fmt.Errorf("unexpected status: %s", res.Status)
+		return fmt.Errorf("telegram api error: %s", res.Status)
 	}
 
 	return nil

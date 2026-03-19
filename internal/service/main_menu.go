@@ -16,14 +16,14 @@ func HandleMainMenu(ctx context.Context, chatID int64, input string) {
 Get started by using:
 /help — view available commands
 
-View main group to connect with other users, get updates and support:
+*View* main group to connect with other users, get updates and support:
 
 • Main group: https://t.me/ryuk_bott
 
 🟢 Ready
 
 `
-		imagePath := "assets/welcome-img.jpeg"
+		imagePath := "./assets/welcome-img.jpeg"
 
 		err := SendPhotoWithCaption(chatID, imagePath, welcomeMessage)
 		if err != nil {
