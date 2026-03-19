@@ -57,7 +57,7 @@ View main group to connect with other users, get updates and support:
 	case input == "/profile":
 		username, err := GetProfile(ctx, chatID)
 		if err != nil {
-			SendMessage(chatID, "Error fetching profile.")
+			SendMessage(chatID, "Error fetching profile. Please register first using /register.")
 			return
 		}
 		SendMessage(chatID, fmt.Sprintf("Your username is: %s", username))
