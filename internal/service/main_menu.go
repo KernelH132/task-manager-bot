@@ -48,18 +48,23 @@ func HandleMainMenu(ctx context.Context, chatID int64, input string) {
 
 	case strings.ToLower(input) == "/help":
 		SendMessage(chatID, `
-╭─── ⚡ RYUK BOT ───╮
-│
-│  👤 /register  → Create/edit profile
-│  ❓ /help      → Show menu
-│  👤 /profile   → View profile
-│  🏓 /ping      → Check if bot is alive
-│  🌐 /group     → Join our main group
-╰─────────────────╯
+            𝚁𝚢𝚞𝚔  𝚌𝚘𝚖𝚖𝚊𝚗𝚍𝚜 & 𝙵𝚎𝚊𝚝𝚞𝚛𝚎𝚜 ⚚
 
-• under construction...
-• Main group: https://t.me/ryuk_bott
+                    ────୨ৎ────
 
+   ╰┈➤ /register   →   create/edit profile
+   ╰┈➤ /help         →    show menu
+   ╰┈➤ /profile     →    view your profile
+   ╰┈➤ /ping         →    check if bot is up  
+
+                      ────୨ৎ────
+
+
+𝚁𝚢𝚞𝚔 𝚒𝚜 𝚊 𝚠𝚘𝚛𝚔 𝚒𝚗 𝚙𝚛𝚘𝚐𝚛𝚎𝚜𝚜, 𝚠𝚒𝚝𝚑 𝚗𝚎𝚠 𝚏𝚎𝚊𝚝𝚞𝚛𝚎𝚜 𝚋𝚎𝚒𝚗𝚐 𝚊𝚍𝚍𝚎𝚍 𝚛𝚎𝚐𝚞𝚕𝚊𝚛𝚕𝚢.
+
+                                       ୨ৎ
+
+ᴄʜᴇᴄᴋ ᴏᴜᴛ ᴛʜᴇ ᴍᴀɪɴ ɢʀᴏᴜᴘ ᴛᴏ ᴄᴏɴɴᴇᴄᴛ ᴡɪᴛʜ ᴏᴛʜᴇʀs → https://t.me/ryuk_bott
 `)
 	case input == "/ping":
 		SendMessage(chatID, "pong")
