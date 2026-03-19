@@ -21,6 +21,6 @@ func init() {
 
 func main() {
 	repository.Connect()
-	fmt.Println("Server running on :3000")
-	http.ListenAndServe(":3000", http.HandlerFunc(handler.Handler))
+	fmt.Println("Server running on :8080")
+	http.ListenAndServe(":8080", http.HandlerFunc(handler.Handler))
 }
