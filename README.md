@@ -31,7 +31,7 @@ A fun Telegram bot built for experimenting, exploring, and enjoying cool feature
    ```bash
    git clone https://github.com/KernelH132/ryuk-bot.git
    cd ryuk-bot
-````
+   ```
 
 2. Create a `.env` file and add your bot token:
 
