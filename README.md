@@ -1,8 +1,3 @@
-Here’s a clean, simple README you can drop straight into your repo:
-
----
-
-````markdown
 # Ryuk Bot
 
 A fun Telegram bot built for experimenting, exploring, and enjoying cool features.
