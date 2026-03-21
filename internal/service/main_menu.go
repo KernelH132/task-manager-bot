@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"strings"
 
+	"github.com/KernelH132/ryuk-bot/internal/llm"
 	"github.com/KernelH132/ryuk-bot/internal/messages"
 	"github.com/KernelH132/ryuk-bot/internal/repository"
 )
@@ -52,7 +53,17 @@ func HandleMainMenu(ctx context.Context, chatID int64, input string) {
 		SendRandomQuote(ctx, chatID)
 
 	default:
-		SendMessage(ctx, chatID, "Sorry, I didn't understand that command. Use /help to see available commands.")
+		llmService := llm.New()
+		SendChatAction(ctx, chatID, "typing")
+		response, err := llmService.Generate(input)
+		if err != nil {
+			fmt.Println("LLM Error:", err)
+			SendMessage(ctx, chatID, "Sorry, I'm having trouble thinking right now. 😵‍💫")
+			return
+		}
+
+		SendMessage(ctx, chatID, response)
+
 	}
 
 }
