@@ -32,7 +32,7 @@ type requestBody struct {
 func (s *LLMService) Generate(prompt string) (string, error) {
 	body := requestBody{
 
-		Model: "openai/gpt-5.2",
+		Model: "google/gemini-2.0-flash-lite-001",
 		Messages: []Message{
 			{
 				Role: "system",
