@@ -1,4 +1,4 @@
-module github.com/KernelH132/pingme
+module github.com/KernelH132/ryuk-bot
 
 go 1.25.0
 
