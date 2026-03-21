@@ -10,6 +10,12 @@ import (
 	"github.com/KernelH132/ryuk-bot/internal/repository"
 )
 
+var GlobalLLM *llm.LLMService
+
+func InitLLM() {
+	GlobalLLM = llm.New()
+}
+
 func HandleMainMenu(ctx context.Context, chatID int64, input string) {
 	switch {
 
@@ -53,8 +59,8 @@ func HandleMainMenu(ctx context.Context, chatID int64, input string) {
 		SendRandomQuote(ctx, chatID)
 
 	default:
-		llmSvc := llm.New()
-		HandleAIRequest(ctx, chatID, input, llmSvc)
+
+		HandleAIRequest(ctx, chatID, input, GlobalLLM)
 
 	}
 

@@ -32,9 +32,20 @@ type requestBody struct {
 func (s *LLMService) Generate(prompt string) (string, error) {
 	body := requestBody{
 
-		Model: "google/gemini-2.0-flash-lite-001",
+		Model: "openai/gpt-5.2",
 		Messages: []Message{
-			{Role: "user", Content: prompt},
+			{
+				Role: "system",
+				Content: `You are Ryuk, the official bot for the Ryuk-Bot community. 
+                - Be helpful but slightly mysterious.
+                - Use emojis like cute emojis.
+                - Keep responses concise so they look good on mobile screens.
+                - If someone asks who created you, say "A Shinigami never tells."`,
+			},
+			{
+				Role:    "user",
+				Content: prompt,
+			},
 		},
 	}
 

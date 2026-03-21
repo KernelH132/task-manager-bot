@@ -8,6 +8,7 @@ import (
 
 	"github.com/KernelH132/ryuk-bot/internal/handler"
 	"github.com/KernelH132/ryuk-bot/internal/repository"
+	"github.com/KernelH132/ryuk-bot/internal/service"
 
 	"github.com/joho/godotenv"
 )
@@ -51,6 +52,7 @@ func setTelegramWebhook() {
 
 func main() {
 	repository.Connect()
+	service.InitLLM()
 
 	go setTelegramWebhook()
 

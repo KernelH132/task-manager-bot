@@ -23,8 +23,9 @@ func SendMessage(ctx context.Context, chatID int64, message string) error {
 	}
 
 	reqBody := &models.SendMessageReqBody{
-		ChatID: chatID,
-		Text:   message,
+		ChatID:    chatID,
+		Text:      message,
+		ParseMode: "Markdown",
 	}
 
 	reqBytes, err := json.Marshal(reqBody)
