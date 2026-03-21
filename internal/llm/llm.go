@@ -14,11 +14,11 @@ type LLMService struct {
 
 func New() *LLMService {
 	return &LLMService{
-		APIKey: os.Getenv("OPENAI_API_KEY"),
+
+		APIKey: os.Getenv("OPENROUTER_API_KEY"),
 	}
 }
 
-// OpenAI style message structure
 type Message struct {
 	Role    string `json:"role"`
 	Content string `json:"content"`
@@ -30,9 +30,9 @@ type requestBody struct {
 }
 
 func (s *LLMService) Generate(prompt string) (string, error) {
-	// request body for OpenAI
 	body := requestBody{
-		Model: "gpt-4o-mini", // Correct model name
+
+		Model: "google/gemini-2.0-flash-lite-001",
 		Messages: []Message{
 			{Role: "user", Content: prompt},
 		},
@@ -43,14 +43,17 @@ func (s *LLMService) Generate(prompt string) (string, error) {
 		return "", err
 	}
 
-	// 2. OpenAI Endpoint
-	req, err := http.NewRequest("POST", "https://api.openai.com/v1/chat/completions", bytes.NewBuffer(jsonData))
+	// CHANGED: OpenRouter Endpoint
+	req, err := http.NewRequest("POST", "https://openrouter.ai/api/v1/chat/completions", bytes.NewBuffer(jsonData))
 	if err != nil {
 		return "", err
 	}
 
 	req.Header.Set("Authorization", "Bearer "+s.APIKey)
 	req.Header.Set("Content-Type", "application/json")
+
+	req.Header.Set("HTTP-Referer", "https://github.com/KernelH132/ryuk-bot")
+	req.Header.Set("X-OpenRouter-Title", "Ryuk Bot")
 
 	client := &http.Client{}
 	resp, err := client.Do(req)
@@ -60,7 +63,7 @@ func (s *LLMService) Generate(prompt string) (string, error) {
 	defer resp.Body.Close()
 
 	if resp.StatusCode != http.StatusOK {
-		return "", fmt.Errorf("API error: status %d", resp.StatusCode)
+		return "", fmt.Errorf("OpenRouter error: status %d", resp.StatusCode)
 	}
 
 	var result struct {

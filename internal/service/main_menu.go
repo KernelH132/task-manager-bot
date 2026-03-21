@@ -53,16 +53,8 @@ func HandleMainMenu(ctx context.Context, chatID int64, input string) {
 		SendRandomQuote(ctx, chatID)
 
 	default:
-		llmService := llm.New()
-		SendChatAction(ctx, chatID, "typing")
-		response, err := llmService.Generate(input)
-		if err != nil {
-			fmt.Println("LLM Error:", err)
-			SendMessage(ctx, chatID, "Sorry, I'm having trouble thinking right now. 😵‍💫")
-			return
-		}
-
-		SendMessage(ctx, chatID, response)
+		llmSvc := llm.New()
+		HandleAIRequest(ctx, chatID, input, llmSvc)
 
 	}
 

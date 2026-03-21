@@ -11,6 +11,7 @@ import (
 	"net/http"
 	"os"
 
+	"github.com/KernelH132/ryuk-bot/internal/llm"
 	"github.com/KernelH132/ryuk-bot/internal/models"
 )
 
@@ -143,4 +144,17 @@ func SendRandomQuote(ctx context.Context, chatID int64) {
 	randomQuote := quotes[randomIndex]
 
 	SendMessage(ctx, chatID, randomQuote)
+}
+
+func HandleAIRequest(ctx context.Context, chatID int64, input string, llmSvc *llm.LLMService) {
+	SendChatAction(ctx, chatID, "typing")
+	SendChatAction(ctx, chatID, "typing")
+	response, err := llmSvc.Generate(input)
+	if err != nil {
+		fmt.Println("LLM Error:", err)
+		SendMessage(ctx, chatID, "Sorry, I'm having trouble thinking right now. 😵‍💫")
+		return
+	}
+
+	SendMessage(ctx, chatID, response)
 }
