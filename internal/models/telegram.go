@@ -11,3 +11,16 @@ type SendPhotoReqBody struct {
 	Caption   string `json:"caption,omitempty"`
 	ParseMode string `json:"parse_mode,omitempty"`
 }
+
+type chat struct {
+	ID int64 `json:"id"`
+}
+
+type message struct {
+	Text string `json:"text"`
+	Chat chat   `json:"chat"`
+}
+
+type WebhookReqBody struct {
+	Message message `json:"message"`
+}

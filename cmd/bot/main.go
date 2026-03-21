@@ -6,8 +6,8 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/KernelH132/pingme/internal/handler"
-	"github.com/KernelH132/pingme/internal/repository"
+	"github.com/KernelH132/ryuk-bot/internal/handler"
+	"github.com/KernelH132/ryuk-bot/internal/repository"
 
 	"github.com/joho/godotenv"
 )
@@ -26,10 +26,12 @@ func setTelegramWebhook() {
 	if token == "" {
 		log.Fatal("telegram bot token not set in environment")
 	}
+
 	publicURL := os.Getenv("RAILWAY_PUBLIC_DOMAIN")
 	if publicURL == "" {
 		log.Fatal("RAILWAY_PUBLIC_DOMAIN environment variable is not set")
 	}
+
 	webhookURL := fmt.Sprintf("https://%s/", publicURL)
 	apiURL := fmt.Sprintf("https://api.telegram.org/bot%s/setWebhook?url=%s", token, webhookURL)
 
@@ -37,6 +39,7 @@ func setTelegramWebhook() {
 	if err != nil {
 		log.Fatalf("Failed to set Telegram webhook: %v", err)
 	}
+
 	defer resp.Body.Close()
 
 	if resp.StatusCode != http.StatusOK {

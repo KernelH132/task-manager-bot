@@ -6,9 +6,9 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/KernelH132/pingme/internal/models"
-	"github.com/KernelH132/pingme/internal/repository"
-	"github.com/KernelH132/pingme/internal/service"
+	"github.com/KernelH132/ryuk-bot/internal/models"
+	"github.com/KernelH132/ryuk-bot/internal/repository"
+	"github.com/KernelH132/ryuk-bot/internal/service"
 )
 
 func Handler(w http.ResponseWriter, r *http.Request) {
