@@ -15,7 +15,7 @@ type LLMService struct {
 func New() *LLMService {
 	return &LLMService{
 
-		APIKey: os.Getenv("OPENROUTER_API_KEY"),
+		APIKey: os.Getenv("OPENAI_API_KEY"),
 	}
 }
 
